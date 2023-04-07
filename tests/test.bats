@@ -12,9 +12,11 @@ setup() {
 }
 
 health_checks() {
-  # Do something useful here that verifies the add-on
-  # ddev exec "curl -s elasticsearch:9200" | grep "${PROJNAME}-elasticsearch"
+  # Confirm site is available. ie. DDEV didn't fail
   ddev exec "curl -s https://localhost:443/"
+
+  # Confirm Mailpit UI is available; it displays an error because it expects Javascript
+  ddev exec "curl -s mailpit:8025" | grep "You require JavaScript to use this app."
 }
 
 teardown() {
@@ -40,4 +42,24 @@ teardown() {
   ddev get tyler36/ddev-mailpit
   ddev restart >/dev/null
   health_checks
+}
+
+@test "install PHP override for Drupal projects" {
+  set -eu -o pipefail
+  cd ${TESTDIR}
+  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+
+  ddev get ${DIR}
+  ddev restart
+
+  # PHP should NOT have a custom config.
+  ddev . php --info | grep -v "smtp-addr mailpit:1025"
+
+  # Set the project type and install the addon again
+  ddev config --project-type=drupal10
+  ddev get ${DIR}
+  ddev restart
+
+  # Check if PHP mail was updated
+  ddev . php --info | grep "smtp-addr mailpit:1025"
 }

@@ -6,6 +6,11 @@
 - [Installation](#installation)
 - [Configuring your framework](#configuring-your-framework)
    - [Laravel](#laravel)
+   - [Drupal](#drupal)
+      - [Option: PHP (legacy)](#option-php-legacy)
+      - [SMTP (recommended)](#smtp-recommended)
+         - [Drupal Symfony Mailer](#drupal-symfony-mailer)
+         - [SMTP Authentication Support](#smtp-authentication-support)
 - [Configuration](#configuration)
    - [Mailhog](#mailhog)
 - [TODO](#todo)
@@ -61,6 +66,56 @@ Some of the features listed on the Mailpit repo page include:
 
 1. Mailpit intercepts Laravel's mail. View the mail at <http://your-project-name.ddev.site:8026/>
 
+### Drupal
+
+#### Option: PHP (legacy)
+
+Drupal uses the PHP mail function to send mail. On install this addon tries to detect Drupal projects and will write a custom PHP `ini` (`.ddev/php/mailpit.ini`) to set the mail host to `mailpit`.
+
+If you plan on using the "SMTP (recommended)" method below, `.ddev/php/mailpit.ini` can be safely deleted.
+
+#### SMTP (recommended)
+
+Modern Drupal developers often prefer to use SMTP for mail instead of the default PHP functions.
+It is recommend to use one of the following popular module instead of PHP (legacy).
+
+- [Drupal Symfony Mailer](https://www.drupal.org/project/symfony_mailer), formerly [Swift Mailer](https://www.drupal.org/project/swiftmailer)
+- [SMTP Authentication Support](https://www.drupal.org/project/smtp)
+
+##### Drupal Symfony Mailer
+
+1. Install and enable [Drupal Symfony Mailer](https://www.drupal.org/project/symfony_mailer) module.
+
+   ```shell
+   ddev composer require drupal/symfony_mailer
+   ddev drush en symfony_mailer
+   ```
+
+1. Visit `/admin/config/system/mailer/transport`
+1. Add a new mailer transport:
+   1. Transport type: `SMTP`
+1. Configure the transport
+   1. Host name: `mailpit`
+   1. Port: `1025`
+   1. Save
+1. Set the SMTP as the default.
+   1. Click the "Edit" operation and "Set as default"
+
+##### SMTP Authentication Support
+
+1. Install and enable the [SMTP](https://www.drupal.org/project/smtp) module.
+
+   ```shell
+   ddev composer require drupal/smtp
+   ddev drush en smpt
+   ```
+
+1. Visit `/admin/config/system/smtp`
+1. Ensure the following:
+   1. Install options | Set SMTP as the default mail system: `On`
+   2. SMTP server settings | SMTP server: '`mailpit`
+   3. SMTP server settings | SMTP port: '`1025`
+
 ## Configuration
 
 This addon uses 2 environment variables that can be set :
@@ -77,7 +132,7 @@ This addon is currently designed as a drop-in replacement for Mailhog.
 Currently, there is no way to "disable" Mailhog (see [#997](https://github.com/ddev/ddev/issues/997)) so this addon
 moves the Mailhog UI to a different port.
 
-To change the new Mailhog port, update `.ddev/config.mailpit.yaml`:
+To change the Mailhog UI port, update `.ddev/config.mailpit.yaml`:
 
 ```yaml
 mailhog_port: "9025"

@@ -12,9 +12,11 @@ setup() {
 }
 
 health_checks() {
-  # Do something useful here that verifies the add-on
-  # ddev exec "curl -s elasticsearch:9200" | grep "${PROJNAME}-elasticsearch"
+  # Confirm site is available. ie. DDEV didn't fail
   ddev exec "curl -s https://localhost:443/"
+
+  # Confirm Mailpit UI is available; it displays an error because it expects Javascript
+  ddev exec "curl -s mailpit:8025" | grep "You require JavaScript to use this app."
 }
 
 teardown() {

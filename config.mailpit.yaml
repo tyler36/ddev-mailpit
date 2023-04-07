@@ -1,0 +1,9 @@
+#ddev-generated
+# Mailpit uses the same web UI port as Mailhog.
+# To allow Mailpit to be a drop-in replacement, we'll need to move Mailhog
+# This file will not be necessary if/when Mailhog is removed.
+# https://github.com/ddev/ddev/issues/997
+
+# Move UI ports somewhere else
+mailhog_port: "9025"
+mailhog_https_port: "9026"

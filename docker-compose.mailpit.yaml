@@ -1,0 +1,17 @@
+#ddev-generated
+# Add the Mailpit service
+services:
+  mailpit:
+    container_name: "ddev-${DDEV_SITENAME}-mailpit"
+    image: axllent/mailpit:latest
+    networks: [default, ddev_default]
+    expose:
+      - ${MAILPIT_PORT:-1025}
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - MP_SMTP_BIND_ADDR=0.0.0.0:${MAILPIT_PORT:-1025}
+      - HTTP_EXPOSE=${MAILPIT_UI_PORT:-8025}:${MAILPIT_UI_PORT:-8025}
+      - HTTPS_EXPOSE=8026:${MAILPIT_UI_PORT:-8025}
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT

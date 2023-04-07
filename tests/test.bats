@@ -43,3 +43,23 @@ teardown() {
   ddev restart >/dev/null
   health_checks
 }
+
+@test "install PHP override for Drupal projects" {
+  set -eu -o pipefail
+  cd ${TESTDIR}
+  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+
+  ddev get ${DIR}
+  ddev restart
+
+  # PHP should NOT have a custom config.
+  ddev . php --info | grep -v "smtp-addr mailpit:1025"
+
+  # Set the project type and install the addon again
+  ddev config --project-type=drupal10
+  ddev get ${DIR}
+  ddev restart
+
+  # Check if PHP mail was updated
+  ddev . php --info | grep "smtp-addr mailpit:1025"
+}

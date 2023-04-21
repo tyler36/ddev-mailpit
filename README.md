@@ -12,7 +12,7 @@
          - [Drupal Symfony Mailer](#drupal-symfony-mailer)
          - [SMTP Authentication Support](#smtp-authentication-support)
 - [Configuration](#configuration)
-   - [Mailhog](#mailhog)
+   - [Replacing Mailhog](#replacing-mailhog)
 - [TODO](#todo)
 - [Contributing](#contributing)
 
@@ -125,7 +125,7 @@ This addon uses 2 environment variables that can be set :
 
 See [Providing Custom Environment Variables to a Container](https://ddev.readthedocs.io/en/stable/users/extend/customization-extendibility/#providing-custom-environment-variables-to-a-container) for methods to set these values.
 
-### Mailhog
+### Replacing Mailhog
 
 This addon is currently designed as a drop-in replacement for Mailhog.
 
@@ -138,6 +138,19 @@ To change the Mailhog UI port, update `.ddev/config.mailpit.yaml`:
 mailhog_port: "9025"
 mailhog_https_port: "9026"
 ```
+
+By default, `ddev launch -m` will open MailHog.
+You can update the command to open Mailpit for your project instead by making the following changes.
+
+1. Copy your global `~/.ddev/commands/host/launch` into your project folder to `.ddev/commands/host/launch`.
+1. Remove `#ddev-generated` from your project's `.ddev/commands/host/launch` command.
+1. Replace the Mailhog section with the following from your project's `.ddev/commands/host/launch`
+
+      ```bash
+         -m|--mailhog)
+            FULLURL="${FULLURL%:[0-9]*}:8026"
+         ;;
+      ```
 
 ## TODO
 

@@ -15,8 +15,9 @@ health_checks() {
   # Confirm site is available. ie. DDEV didn't fail
   ddev exec "curl -s https://localhost:443/"
 
-  # Confirm Mailpit UI is available; it displays an error because it expects Javascript
-  ddev exec "curl -s mailpit:8025" | grep "You require JavaScript to use this app."
+  # Check Healthcheck endpoints. https://github.com/axllent/mailpit/wiki/Healthcheck-endpoints
+  ddev exec "curl --silent --head mailpit:8025/livez" | grep "HTTP/1.1 200 OK"
+  ddev exec "curl --silent --head mailpit:8025/readyz" | grep "HTTP/1.1 200 OK"
 }
 
 teardown() {

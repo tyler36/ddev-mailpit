@@ -7,6 +7,7 @@ name: ddev-mailpit
 project_files:
 - docker-compose.mailpit.yaml
 - config.mailpit.yaml
+- mailpit/config.yaml
 
 # OOTB, Drupal projects use PHP's mail function. Below, we check for this and update
 # the server from default to 'mailpit'

@@ -13,6 +13,8 @@
          - [SMTP Authentication Support](#smtp-authentication-support)
 - [Configuration](#configuration)
    - [Replacing Mailhog](#replacing-mailhog)
+   - [SMTP relay](#smtp-relay)
+      - [Forward all mail](#forward-all-mail)
 - [TODO](#todo)
 - [Contributing](#contributing)
 
@@ -151,6 +153,32 @@ You can update the command to open Mailpit for your project instead by making th
             FULLURL="${FULLURL%:[0-9]*}:8026"
          ;;
       ```
+
+### SMTP relay
+
+Mailpit can be configured to allow you to forward emails to another SMTP.
+This addon automatically sets up the configuration file, however, you will need to update the
+specific settings for you SMTP server to use.
+
+Update your project's `.ddev/mailpit/config.yaml` file:
+
+1. Remove `#ddev-generated`.
+1. Add your SMTP server details.
+
+See [SMTP replay](https://github.com/axllent/mailpit/wiki/SMTP-relay) for more details.
+
+#### Forward all mail
+
+To automatically relay _all_ mail, update `.ddev/docker-compose.mailpit.yaml`:
+
+1. Remove `#ddev-generated`.
+1. Add `MP_SMTP_RELAY_ALL` environmental variable.
+
+   ```yaml
+    environment:
+      ...
+      - MP_SMTP_RELAY_ALL=TRUE
+   ```
 
 ## TODO
 

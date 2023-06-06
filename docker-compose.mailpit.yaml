@@ -3,7 +3,7 @@
 services:
   mailpit:
     container_name: "ddev-${DDEV_SITENAME}-mailpit"
-    image: axllent/mailpit:v1.6.3
+    image: axllent/mailpit:v1.6.16
     networks: [default, ddev_default]
     expose:
       - ${MAILPIT_PORT:-1025}

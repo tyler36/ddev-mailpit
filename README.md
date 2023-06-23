@@ -156,7 +156,11 @@ You can update the command to open Mailpit for your project instead by making th
 
       ```bash
          -m|--mailhog)
-            FULLURL="${FULLURL%:[0-9]*}:8026"
+            if [[ ! -z "${GITPOD_INSTANCE_ID}" ]] || [[ "${CODESPACES}" == "true" ]]; then
+                FULLURL="${FULLURL/-${DDEV_HOST_WEBSERVER_PORT}/-${MAILPIT_UI_PORT:-8026}}"
+            else
+                FULLURL="${FULLURL%:[0-9]*}:${MAILPIT_UI_PORT:-8026}"
+            fi
          ;;
       ```
 

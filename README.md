@@ -80,6 +80,14 @@ Some of the features listed on the Mailpit repo page include:
 
 Drupal uses the PHP mail function to send mail. On install this addon tries to detect Drupal projects and will write a custom PHP `ini` (`.ddev/php/mailpit.ini`) to set the mail host to `mailpit`.
 
+1. Override DDEV mail settings in `settings.local.php`.
+
+   ```php
+   $config['symfony_mailer.mailer_transport.sendmail']['configuration']['host']='mailpit';
+   ```
+
+`settings.ddev.php` sets this value to 'localhost'. Please ensure the above setting is *after* loading `settings.ddev.php`.
+
 If you plan on using the "SMTP (recommended)" method below, `.ddev/php/mailpit.ini` can be safely deleted.
 
 #### SMTP (recommended)
@@ -179,7 +187,7 @@ See [SMTP replay](https://github.com/axllent/mailpit/wiki/SMTP-relay) for more d
 
 #### Forward all mail
 
-To automatically relay _all_ mail, update `.ddev/docker-compose.mailpit.yaml`:
+To automatically relay *all* mail, update `.ddev/docker-compose.mailpit.yaml`:
 
 1. Remove `#ddev-generated`.
 1. Add `MP_SMTP_RELAY_ALL` environmental variable.

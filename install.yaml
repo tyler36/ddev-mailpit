@@ -14,13 +14,11 @@ project_files:
 # the server from default to 'mailpit'
 post_install_actions:
 - |
-  if [[ "${DDEV_PROJECT_TYPE}" == "drupal"* ]]; then
-  #ddev-description:Drupal project detected. Adding custom PHP mail settings.
+  #ddev-description:Adding custom PHP mail settings.
     mkdir -p php
     echo '# #ddev-generated
   # Update web container PHP to use mailpit server
   [mail function]
   SMTP="mailpit"
-  sendmail_path="/usr/local/bin/mailhog sendmail test@example.org --smtp-addr mailpit:1025"
+  sendmail_path="/usr/local/bin/mailpit sendmail test@example.org --smtp-addr mailpit:1025"
   ' > php/mailpit.ini
-  fi

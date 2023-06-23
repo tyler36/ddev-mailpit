@@ -20,3 +20,8 @@ services:
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
+
+  web:
+    volumes:
+      # Map the mailpit executable into the web container
+      - ./mailpit:/usr/local/bin/mailpit

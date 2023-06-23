@@ -58,7 +58,13 @@ Some of the features listed on the Mailpit repo page include:
 
 ### Laravel
 
-1. Update your project's `.env` file:
+1. Disable DDEV's setting management.
+
+   ```shell
+   ddev config --disable-settings-management=true
+   ```
+
+1. Update your project's `.env` file. If these setting keep changing, you may need to disable DDEV's setting management.
 
    ```shell
    MAIL_MAILER=smtp

@@ -18,6 +18,8 @@
 - [TODO](#todo)
 - [Contributing](#contributing)
 
+> **_NOTE:_**  Mailpit was integrated into [DDEV `1.22.2`](https://github.com/ddev/ddev/releases/tag/v1.22.2).
+
 ## What is ddev-mailpit?
 
 This repository provides the [Mailpit](https://github.com/axllent/mailpit) service to [DDEV](https://ddev.readthedocs.io/).
@@ -86,7 +88,7 @@ Drupal uses the PHP mail function to send mail. On install this addon tries to d
    $config['symfony_mailer.mailer_transport.sendmail']['configuration']['host']='mailpit';
    ```
 
-`settings.ddev.php` sets this value to 'localhost'. Please ensure the above setting is *after* loading `settings.ddev.php`.
+`settings.ddev.php` sets this value to 'localhost'. Please ensure the above setting is _after_ loading `settings.ddev.php`.
 
 If you plan on using the "SMTP (recommended)" method below, `.ddev/php/mailpit.ini` can be safely deleted.
 
@@ -187,7 +189,7 @@ See [SMTP replay](https://github.com/axllent/mailpit/wiki/SMTP-relay) for more d
 
 #### Forward all mail
 
-To automatically relay *all* mail, update `.ddev/docker-compose.mailpit.yaml`:
+To automatically relay _all_ mail, update `.ddev/docker-compose.mailpit.yaml`:
 
 1. Remove `#ddev-generated`.
 1. Add `MP_SMTP_RELAY_ALL` environmental variable.

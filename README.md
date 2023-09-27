@@ -1,5 +1,9 @@
 [![tests](https://github.com/tyler36/ddev-mailpit/actions/workflows/tests.yml/badge.svg)](https://github.com/tyler36/ddev-mailpit/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2024.svg)
 
+> **_NOTE:_**
+> This addon was archived 2023-09-23.
+> Mailpit was integrated into [DDEV `1.22.2`](https://github.com/ddev/ddev/releases/tag/v1.22.2), making this addon obsolete. To avoid conflict, please remove this addon from any project that is using DDEV `>=1.22.2`.
+
 # ddev-mailpit <!-- omit in toc -->
 
 - [What is ddev-mailpit?](#what-is-ddev-mailpit)
@@ -17,8 +21,6 @@
       - [Forward all mail](#forward-all-mail)
 - [TODO](#todo)
 - [Contributing](#contributing)
-
-> **_NOTE:_**  Mailpit was integrated into [DDEV `1.22.2`](https://github.com/ddev/ddev/releases/tag/v1.22.2).
 
 ## What is ddev-mailpit?
 
